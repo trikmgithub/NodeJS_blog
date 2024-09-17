@@ -1,5 +1,15 @@
 @import 'variables';
 
 .app {
-    background-color: $fontColor;
+    color: $blackFont;
+}
+
+.whiteFont {
+    color: $whiteFont !important;
+}
+
+.navbar-light .navbar-brand,
+.navbar-light .navbar-nav .active>.nav-link,
+.navbar-light .navbar-nav .nav-link {
+    color: $whiteFont;
 }

@@ -2,10 +2,16 @@
   const morgan = require('morgan');
   const path = require('path');
   const { engine : handlebars } = require('express-handlebars');
+const { ClientRequest } = require('http');
   const app = express();
   const port = 3000;
 
   app.use(express.static(path.join(__dirname, 'public')));
+  app.use(express.urlencoded({
+    extended: true,
+  }));
+  app.use(express.json());
+
  
   // HTTP logger
   app.use(morgan('combined'));
@@ -25,6 +31,15 @@
     res.render('news');
   });
 
+  app.get('/search', (req, res) => {
+
+    res.render('search');
+  });
+
+  app.post('/search', (req, res) => {
+    console.log(req.body);
+    res.send('');
+  })
   
 
   try {
