@@ -1,13 +1,25 @@
+const Course = require('../models/Course');
+
 class SiteController {
     //[GET] /Site
 
-    index(req, res) {
-        res.render('home');
+    async index(req, res) {
+        try {
+            const courses = await Course.find({});
+            res.json(courses);
+        } catch (error) {
+            res.status(400).json({ error: 'message' });
+        }
     }
 
     //[GET] /search/:slug
+
     search(req, res) {
-        res.render('search');
+        try {
+            res.render('search');
+        } catch (error) {
+            res.status(400).json({ error: 'message' });
+        }
     }
 }
 

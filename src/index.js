@@ -6,6 +6,10 @@ const https = require('https');
 const http = require('http');
 const fs = require('fs');
 const { createCA, createCert } = require('mkcert');
+const db = require('./config/db');
+
+//connect to database
+db.connect();
 
 const route = require('./routes');
 
@@ -75,13 +79,13 @@ async function startServer() {
         ),
     };
 
-    // HTTP logger
+    // HTTP logger: dùng morgan để in lỗi ra
     app.use(morgan('combined'));
 
-    // Templates engine
+    // Templates engine: dùng templates engine để có .hbs
     app.engine('.hbs', handlebars({ extname: '.hbs' }));
     app.set('view engine', '.hbs');
-    app.set('views', path.join(__dirname, 'resources/views'));
+    app.set('views', path.join(__dirname, 'resources', 'views'));
 
     // Middleware để xử lý các request
     app.use(express.static(path.join(__dirname, 'public')));
@@ -93,7 +97,7 @@ async function startServer() {
 
     // Khởi động server HTTPS
     http.createServer(options, app).listen(port, '0.0.0.0', () => {
-        console.log(`Example app listening on port ${port}`);
+        console.log(`App listening on port ${port}`);
     });
 }
 
