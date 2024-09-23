@@ -83,7 +83,24 @@ async function startServer() {
     app.use(morgan('combined'));
 
     // Templates engine: dùng templates engine để có .hbs
-    app.engine('.hbs', handlebars({ extname: '.hbs' }));
+    app.engine(
+        '.hbs',
+        handlebars({
+            extname: '.hbs',
+            helpers: {
+                log: (context) => {
+                    // console.log(context);
+                    return context; // Trả về giá trị để sử dụng trong template
+                },
+            },
+            //Làm như này được nhưng bật quyền truy cập và Prototype sẽ tăng rủi ro bảo mật
+            //=> Đừng ngoo mà làm
+            // runtimeOptions: {
+            //     allowProtoPropertiesByDefault: true,
+            //     allowProtoMethodsByDefault: true,
+            // }
+        }),
+    );
     app.set('view engine', '.hbs');
     app.set('views', path.join(__dirname, 'resources', 'views'));
 

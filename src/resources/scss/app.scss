@@ -13,3 +13,17 @@
 .navbar-light .navbar-nav .nav-link {
     color: $whiteFont;
 }
+
+.card {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Đảm bảo card chiếm toàn bộ chiều cao */
+}
+
+.card-body {
+    flex-grow: 1; /* Điều này giúp phần body giãn ra đồng đều */
+}
+
+.mb-auto {
+    margin-bottom: auto; /* Điều này giúp đẩy nút xuống dưới */
+}
