@@ -7,6 +7,7 @@ const http = require('http');
 const fs = require('fs');
 const { createCA, createCert } = require('mkcert');
 const db = require('./config/db');
+const methodOverride = require('method-override');
 
 //connect to database
 db.connect();
@@ -92,6 +93,9 @@ async function startServer() {
                     // console.log(context);
                     return context; // Trả về giá trị để sử dụng trong template
                 },
+                sum: (a, b) => {
+                    return a + b;
+                },
             },
             //Làm như này được nhưng bật quyền truy cập và Prototype sẽ tăng rủi ro bảo mật
             //=> Đừng ngoo mà làm
@@ -109,6 +113,9 @@ async function startServer() {
     app.use(express.urlencoded({ extended: true }));
     app.use(express.json());
 
+    // override with POST having ?_method=DELETE
+    app.use(methodOverride('_method'));
+
     // Route init
     route(app);
 
@@ -120,5 +127,5 @@ async function startServer() {
 
 // Chạy server
 startServer().catch((err) => {
-    console.error('Error starting server:', err);
+    console.error();
 });
